@@ -61,9 +61,9 @@ const Dashboard = () => {
   };
 
   const tableData = [
-    { player: "Player_123", time: "2m ago", event: "Level Complete", status: "success" },
-    { player: "Player_456", time: "5m ago", event: "Purchase Failed", status: "error" },
-    { player: "Player_789", time: "8m ago", event: "Tutorial Start", status: "warning" }
+    { player: "Player_123", time: "2m ago", event: "Level Complete", status: "success" as const },
+    { player: "Player_456", time: "5m ago", event: "Purchase Failed", status: "error" as const },
+    { player: "Player_789", time: "8m ago", event: "Tutorial Start", status: "warning" as const }
   ];
 
   return (
