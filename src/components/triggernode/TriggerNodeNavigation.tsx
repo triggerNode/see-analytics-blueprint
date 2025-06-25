@@ -22,7 +22,7 @@ const TriggerNodeNavigation = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="text-2xl font-bold text-[#20243F]">
-              {'{t}riggerNode'}
+              {"{t}riggerNode"}
             </div>
           </div>
           
@@ -30,7 +30,7 @@ const TriggerNodeNavigation = () => {
             <a href="#services" className="text-gray-700 hover:text-[#20243F] transition-colors">Our Services</a>
             <a href="/products" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-[#20243F] transition-colors">Our Works</a>
             <a href="#contact" className="text-gray-700 hover:text-[#20243F] transition-colors">Contact Us</a>
-            <a href="/products/see-analytics" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-[#20243F] transition-colors font-semibold">Try {'{s}ee'}</a>
+            <a href="/products/see-analytics" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-[#20243F] transition-colors font-semibold">Try {"{s}ee"}</a>
           </div>
           
           <Button 

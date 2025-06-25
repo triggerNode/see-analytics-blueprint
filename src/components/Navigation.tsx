@@ -22,7 +22,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="text-2xl font-bold text-[#20243F]">
-              {'{s}ee'}
+              {"{s}ee"}
             </div>
           </div>
           

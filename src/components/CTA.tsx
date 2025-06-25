@@ -10,7 +10,7 @@ const CTA = () => {
           Ready to optimize your game?
         </h2>
         <p className="text-xl mb-8 opacity-90">
-          Join thousands of developers who trust {'{s}ee'} Analytics to understand their players 
+          Join thousands of developers who trust {"{s}ee"} Analytics to understand their players 
           and grow their games.
         </p>
         

@@ -32,7 +32,7 @@ const Testimonials = () => {
             Loved by developers
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            See what successful Roblox developers are saying about {'{s}ee'} Analytics.
+            See what successful Roblox developers are saying about {"{s}ee"} Analytics.
           </p>
         </div>
         

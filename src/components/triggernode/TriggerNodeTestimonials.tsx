@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 const TriggerNodeTestimonials = () => {
   const testimonials = [
     {
-      quote: "TriggerNode transformed our operations completely. We've saved 40+ hours per week through their automation solutions.",
+      quote: "{t}riggerNode transformed our operations completely. We've saved 40+ hours per week through their automation solutions.",
       name: "Jennifer Walsh",
       company: "TechScale Inc.",
       avatar: "JW"
@@ -17,7 +17,7 @@ const TriggerNodeTestimonials = () => {
       avatar: "MC"
     },
     {
-      quote: "Professional, efficient, and results-driven. TriggerNode doesn't just build solutions, they build partnerships.",
+      quote: "Professional, efficient, and results-driven. {t}riggerNode doesn't just build solutions, they build partnerships.",
       name: "Sarah Mitchell",
       company: "InnovateCorp",
       avatar: "SM"

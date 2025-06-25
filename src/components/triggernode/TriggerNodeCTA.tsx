@@ -10,7 +10,7 @@ const TriggerNodeCTA = () => {
           Ready to Automate?
         </h2>
         <p className="text-xl mb-8 opacity-90">
-          Join forward-thinking companies that trust TriggerNode to transform their operations 
+          Join forward-thinking companies that trust {"{t}riggerNode"} to transform their operations 
           with intelligent automation and AI solutions.
         </p>
         
