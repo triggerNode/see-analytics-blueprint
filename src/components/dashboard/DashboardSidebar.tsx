@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
@@ -9,14 +10,23 @@ interface DashboardSidebarProps {
 }
 
 const DashboardSidebar = ({ collapsed, onToggle }: DashboardSidebarProps) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const menuItems = [
-    { name: 'Dashboard', active: true, badge: null },
-    { name: 'Real-Time', active: false, badge: '3' },
-    { name: 'Funnels', active: false, badge: null },
-    { name: 'A/B Tests', active: false, badge: null },
-    { name: 'Retention', active: false, badge: null },
-    { name: 'Settings', active: false, badge: null }
+    { name: 'Dashboard', path: '/dashboard', badge: null },
+    { name: 'Real-Time', path: '/realtime', badge: '3' },
+    { name: 'Funnels', path: '#', badge: null },
+    { name: 'A/B Tests', path: '#', badge: null },
+    { name: 'Retention', path: '#', badge: null },
+    { name: 'Settings', path: '#', badge: null }
   ];
+
+  const handleNavigation = (path: string) => {
+    if (path !== '#') {
+      navigate(path);
+    }
+  };
 
   return (
     <div 
@@ -55,28 +65,32 @@ const DashboardSidebar = ({ collapsed, onToggle }: DashboardSidebarProps) => {
 
       {/* Navigation */}
       <nav className="p-4 space-y-2">
-        {menuItems.map((item, index) => (
-          <Button
-            key={index}
-            variant="ghost"
-            className={`w-full justify-start text-left transition-all duration-200 ${
-              collapsed ? 'px-3' : 'px-4'
-            } ${
-              item.active 
-                ? 'bg-white/10 text-white hover:bg-white/20' 
-                : 'text-white/70 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <div className="flex items-center justify-between w-full">
-              <span className={collapsed ? 'sr-only' : ''}>{item.name}</span>
-              {item.badge && !collapsed && (
-                <Badge variant="destructive" className="bg-red-500 text-white text-xs">
-                  {item.badge}
-                </Badge>
-              )}
-            </div>
-          </Button>
-        ))}
+        {menuItems.map((item, index) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <Button
+              key={index}
+              variant="ghost"
+              onClick={() => handleNavigation(item.path)}
+              className={`w-full justify-start text-left transition-all duration-200 ${
+                collapsed ? 'px-3' : 'px-4'
+              } ${
+                isActive 
+                  ? 'bg-white/10 text-white hover:bg-white/20' 
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <div className="flex items-center justify-between w-full">
+                <span className={collapsed ? 'sr-only' : ''}>{item.name}</span>
+                {item.badge && !collapsed && (
+                  <Badge variant="destructive" className="bg-red-500 text-white text-xs">
+                    {item.badge}
+                  </Badge>
+                )}
+              </div>
+            </Button>
+          );
+        })}
       </nav>
     </div>
   );

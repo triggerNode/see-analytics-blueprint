@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import TriggerNode from "./pages/TriggerNode";
 import Dashboard from "./pages/Dashboard";
+import RealTime from "./pages/RealTime";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/triggernode" element={<TriggerNode />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/realtime" element={<RealTime />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
