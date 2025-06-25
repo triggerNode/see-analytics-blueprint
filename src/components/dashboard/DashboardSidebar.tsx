@@ -1,9 +1,11 @@
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { routes } from '@/routes';
+import { useAuth } from '@/contexts/AuthContext';
+import { LogOut, User } from 'lucide-react';
 
 interface DashboardSidebarProps {
   collapsed: boolean;
@@ -11,6 +13,14 @@ interface DashboardSidebarProps {
 }
 
 const DashboardSidebar = ({ collapsed, onToggle }: DashboardSidebarProps) => {
+  const { user, isAdmin, tier, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/login');
+  };
+
   const menuItems = [
     { name: 'Dashboard', path: routes.dashboard.root, badge: null },
     { name: 'Real-Time', path: routes.dashboard.realtime, badge: '3' },
@@ -56,7 +66,7 @@ const DashboardSidebar = ({ collapsed, onToggle }: DashboardSidebarProps) => {
       </div>
 
       {/* Navigation */}
-      <nav className="p-4 space-y-2">
+      <nav className="p-4 space-y-2 flex-1">
         {menuItems.map((item, index) => (
           <NavLink
             key={index}
@@ -83,6 +93,43 @@ const DashboardSidebar = ({ collapsed, onToggle }: DashboardSidebarProps) => {
           </NavLink>
         ))}
       </nav>
+
+      {/* User Section */}
+      <div className="p-4 border-t border-white/10">
+        {!collapsed && user && (
+          <div className="mb-4 p-3 bg-white/5 rounded-lg">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+                <User className="w-4 h-4" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-white truncate">
+                  {user.email}
+                </p>
+                <div className="flex items-center space-x-2 mt-1">
+                  <span className="text-xs text-white/60 capitalize">{tier}</span>
+                  {isAdmin && (
+                    <Badge className="bg-gradient-to-r from-[#A992FF] to-[#7C3AED] text-white text-xs">
+                      Admin
+                    </Badge>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        <Button
+          variant="ghost"
+          onClick={handleSignOut}
+          className={`w-full text-white/70 hover:text-white hover:bg-white/5 ${
+            collapsed ? 'px-2' : 'px-4'
+          }`}
+        >
+          <LogOut className="w-4 h-4" />
+          {!collapsed && <span className="ml-2">Sign Out</span>}
+        </Button>
+      </div>
     </div>
   );
 };

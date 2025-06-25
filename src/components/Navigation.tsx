@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const Navigation = () => {
@@ -34,9 +35,18 @@ const Navigation = () => {
             <a href="#faq" className="text-gray-700 hover:text-[#20243F] transition-colors">FAQ</a>
           </div>
           
-          <Button className="bg-[#20243F] hover:bg-[#20243F]/90 text-white">
-            Get Started
-          </Button>
+          <div className="flex items-center space-x-4">
+            <Link to="/login">
+              <Button variant="outline" className="border-[#20243F] text-[#20243F] hover:bg-[#20243F] hover:text-white">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button className="bg-[#20243F] hover:bg-[#20243F]/90 text-white">
+                Get Started
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
