@@ -1,8 +1,9 @@
 
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { routes } from '@/routes';
 
 interface DashboardSidebarProps {
   collapsed: boolean;
@@ -10,23 +11,14 @@ interface DashboardSidebarProps {
 }
 
 const DashboardSidebar = ({ collapsed, onToggle }: DashboardSidebarProps) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const menuItems = [
-    { name: 'Dashboard', path: '/dashboard', badge: null },
-    { name: 'Real-Time', path: '/realtime', badge: '3' },
-    { name: 'Funnels', path: '#', badge: null },
-    { name: 'A/B Tests', path: '#', badge: null },
-    { name: 'Retention', path: '#', badge: null },
-    { name: 'Settings', path: '#', badge: null }
+    { name: 'Dashboard', path: routes.dashboard.root, badge: null },
+    { name: 'Real-Time', path: routes.dashboard.realtime, badge: '3' },
+    { name: 'Funnels', path: routes.dashboard.funnels, badge: null },
+    { name: 'Economy', path: routes.dashboard.economy, badge: null },
+    { name: 'A/B Tests', path: routes.dashboard.abtests, badge: null },
+    { name: 'Retention', path: routes.dashboard.retention, badge: null }
   ];
-
-  const handleNavigation = (path: string) => {
-    if (path !== '#') {
-      navigate(path);
-    }
-  };
 
   return (
     <div 
@@ -65,32 +57,31 @@ const DashboardSidebar = ({ collapsed, onToggle }: DashboardSidebarProps) => {
 
       {/* Navigation */}
       <nav className="p-4 space-y-2">
-        {menuItems.map((item, index) => {
-          const isActive = location.pathname === item.path;
-          return (
-            <Button
-              key={index}
-              variant="ghost"
-              onClick={() => handleNavigation(item.path)}
-              className={`w-full justify-start text-left transition-all duration-200 ${
-                collapsed ? 'px-3' : 'px-4'
+        {menuItems.map((item, index) => (
+          <NavLink
+            key={index}
+            to={item.path}
+            end={item.path === routes.dashboard.root}
+            className={({ isActive }) =>
+              `flex items-center justify-start text-left transition-all duration-200 rounded-md ${
+                collapsed ? 'px-3 py-2' : 'px-4 py-2'
               } ${
                 isActive 
-                  ? 'bg-white/10 text-white hover:bg-white/20' 
+                  ? 'bg-white/10 text-white' 
                   : 'text-white/70 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <div className="flex items-center justify-between w-full">
-                <span className={collapsed ? 'sr-only' : ''}>{item.name}</span>
-                {item.badge && !collapsed && (
-                  <Badge variant="destructive" className="bg-red-500 text-white text-xs">
-                    {item.badge}
-                  </Badge>
-                )}
-              </div>
-            </Button>
-          );
-        })}
+              }`
+            }
+          >
+            <div className="flex items-center justify-between w-full">
+              <span className={collapsed ? 'sr-only' : ''}>{item.name}</span>
+              {item.badge && !collapsed && (
+                <Badge variant="destructive" className="bg-red-500 text-white text-xs">
+                  {item.badge}
+                </Badge>
+              )}
+            </div>
+          </NavLink>
+        ))}
       </nav>
     </div>
   );
