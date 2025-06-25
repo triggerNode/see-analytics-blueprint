@@ -1,73 +1,151 @@
-# Welcome to your Lovable project
 
-## Project info
+# {s}ee Analytics
 
-**URL**: https://lovable.dev/projects/d2e20cc7-43f1-40f0-8c5d-b8e5f9365d06
+> **Real-time game analytics dashboard for data-driven game development**
 
-## How can I edit this code?
+A comprehensive analytics platform built with React, TypeScript, and Supabase, designed specifically for game developers who need actionable insights about their players and game performance.
 
-There are several ways of editing your application.
+![{s}ee Analytics Dashboard](https://img.shields.io/badge/Status-Production%20Ready-green)
+![Authentication](https://img.shields.io/badge/Auth-Supabase-blue)
+![UI Framework](https://img.shields.io/badge/UI-Shadcn%2FUI-purple)
 
-**Use Lovable**
+## ✨ Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d2e20cc7-43f1-40f0-8c5d-b8e5f9365d06) and start prompting.
+### 🔐 Authentication & Authorization
+- **Secure Authentication**: Email/password login with Supabase Auth
+- **Admin System**: Automatic admin privileges for designated emails
+- **Subscription Tiers**: Free and Pro tiers with feature gating
+- **Protected Routes**: Authentication-gated dashboard access
 
-Changes made via Lovable will be committed automatically to this repo.
+### 📊 Analytics Dashboard
+- **Real-time Monitoring**: Live player activity and event tracking
+- **Funnel Analysis**: Conversion tracking with interactive visualizations
+- **Economy Insights**: Currency sources and sinks analysis
+- **Retention Metrics**: Player return rate analysis
+- **A/B Testing**: Experimentation framework (coming soon)
 
-**Use your preferred IDE**
+### 🎨 Modern UI/UX
+- **Glass-morphism Design**: Modern aesthetic with gradient backgrounds
+- **Responsive Layout**: Optimized for desktop and mobile
+- **Interactive Charts**: Powered by Recharts library
+- **Smooth Animations**: Polished user experience
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 Quick Start
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
+- Node.js 18+
+- Supabase account
 
-Follow these steps:
+### Installation
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd see-analytics
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Install dependencies
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Database Setup
+The project includes automatic migrations for:
+- User profiles with admin flags
+- Events tracking table
+- Row-Level Security policies
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🏗️ Architecture
 
-**Use GitHub Codespaces**
+### Tech Stack
+- **Frontend**: React 18, TypeScript, Vite
+- **UI Library**: Shadcn/UI components
+- **Styling**: Tailwind CSS
+- **Backend**: Supabase (Auth, Database, Edge Functions)
+- **Charts**: Recharts
+- **Routing**: React Router v6
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Project Structure
+```
+src/
+├── components/          # Reusable UI components
+│   ├── auth/           # Authentication components
+│   ├── dashboard/      # Dashboard-specific components
+│   └── ui/             # Shadcn/UI components
+├── contexts/           # React contexts
+├── hooks/              # Custom hooks
+├── pages/              # Route components
+└── integrations/       # External service integrations
 
-## What technologies are used for this project?
+supabase/
+├── functions/          # Edge functions
+└── migrations/         # Database migrations
+```
 
-This project is built with:
+## 🔧 Configuration
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Admin Users
+Admin privileges are automatically granted to:
+- `olu@triggernode.com`
+- `founder@triggernode.com`
+- `admin@triggernode.com`
 
-## How can I deploy this project?
+### Feature Flags
+Premium features are controlled via the `useFeature` hook:
+```typescript
+const hasPremium = useFeature('premiumOnly');
+```
 
-Simply open [Lovable](https://lovable.dev/projects/d2e20cc7-43f1-40f0-8c5d-b8e5f9365d06) and click on Share -> Publish.
+## 📚 Documentation
 
-## Can I connect a custom domain to my Lovable project?
+- [**Project Status Report**](PROJECT_STATUS_REPORT.md) - Comprehensive current state
+- [**Changelog**](CHANGELOG.md) - Version history and updates
+- [**Deployment Guide**](DEPLOYMENT_GUIDE.md) - Production deployment instructions
 
-Yes, you can!
+## 🛡️ Security
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- Row-Level Security (RLS) enabled on all database tables
+- Admin access controlled via email whitelist
+- Protected API endpoints with authentication
+- Secure edge functions with proper CORS handling
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🎯 Use Cases
+
+Perfect for game developers who need:
+- **Player Behavior Analysis**: Understand how players interact with your game
+- **Conversion Optimization**: Track and improve key game metrics
+- **Real-time Monitoring**: Stay informed about live game performance
+- **Business Intelligence**: Make data-driven decisions about game development
+
+## 🔄 Development Status
+
+| Feature | Status |
+|---------|--------|
+| Authentication System | ✅ Complete |
+| Dashboard UI | ✅ Complete |
+| Real-time Feed | ✅ Complete |
+| Funnel Analysis | ✅ UI Complete |
+| Economy Tracking | ✅ UI Complete |
+| Retention Analysis | 🔄 In Development |
+| A/B Testing | 🔄 Planned |
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 📄 License
+
+This project is proprietary software developed for game analytics.
+
+## 🏢 About
+
+**{s}ee Analytics** is developed by [TriggerNode](https://triggernode.com), a tech partner specializing in AI and automation solutions for growing companies.
+
+---
+
+**Live Preview**: [https://loving-hugle-c2b5d0.lovable.app](https://loving-hugle-c2b5d0.lovable.app)
+
+*Built with ❤️ for the game development community*
