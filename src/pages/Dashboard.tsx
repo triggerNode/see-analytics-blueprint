@@ -39,7 +39,22 @@ const Dashboard = () => {
     setShowGameSelector(true);
   };
 
-  // Calculate metrics from real-time data
+  // Show loading only when we have no data and are actually loading
+  if (loading && rows.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-[#4B6AFF]" />
+          <div className="text-2xl font-bold text-[#18181B] mb-2">Loading Dashboard...</div>
+          <p className="text-gray-600">
+            {placeId ? `Fetching data for Place ID: ${placeId}` : 'Connecting to real-time data'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Calculate metrics from data
   const live = rows.at(-1);
   const today = new Date().toDateString();
   const todayRows = rows.filter(row => new Date(row.ts).toDateString() === today);
@@ -52,25 +67,25 @@ const Dashboard = () => {
   const kpiData = [
     { 
       title: "Active Players", 
-      value: loading ? "..." : (live?.ccus || 0).toLocaleString(), 
+      value: (live?.ccus || 0).toLocaleString(), 
       subtitle: "current CCU", 
       icon: "activity" as const 
     },
     { 
       title: "Revenue Today", 
-      value: loading ? "..." : `$${revenueToday.toFixed(2)}`, 
+      value: `$${revenueToday.toFixed(2)}`, 
       subtitle: `from ${todayRows.length} data points`, 
       icon: "trending-up" as const 
     },
     { 
       title: "Rage Quits", 
-      value: loading ? "..." : recentRageQuits.toString(), 
+      value: recentRageQuits.toString(), 
       subtitle: "last hour", 
       icon: "bar-chart-3" as const 
     },
     { 
       title: "Data Points", 
-      value: loading ? "..." : rows.length.toString(), 
+      value: rows.length.toString(), 
       subtitle: "total collected", 
       icon: "pie-chart" as const 
     }
@@ -80,10 +95,10 @@ const Dashboard = () => {
   const chartData = {
     playerHistory: {
       title: "Player Count Over Time",
-      data: rows.length > 0 ? rows.slice(-20).map((row, idx) => ({ 
+      data: rows.slice(-20).map((row, idx) => ({ 
         time: idx, 
         value: row.ccus 
-      })) : [],
+      })),
     },
     revenueChart: {
       title: "Revenue Tracking",
@@ -113,20 +128,6 @@ const Dashboard = () => {
             row.rage_quits > 2 ? 'warning' as const : 'success' as const
   }));
 
-  if (loading && rows.length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-[#4B6AFF]" />
-          <div className="text-2xl font-bold text-[#18181B] mb-2">Loading Dashboard...</div>
-          <p className="text-gray-600">
-            {placeId ? `Fetching data for Place ID: ${placeId}` : 'Connecting to real-time data'}
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="max-w-7xl mx-auto">
       {error && (
@@ -153,7 +154,8 @@ const Dashboard = () => {
               Dashboard - Place ID: {placeId}
             </h1>
             <p className="text-gray-600">
-              {rows.length > 0 ? `Showing ${rows.length} data points` : 'Waiting for data...'}
+              Showing {rows.length} data points
+              {error?.includes('demo') && ' (demo mode)'}
             </p>
           </div>
           <Button
@@ -183,7 +185,7 @@ const Dashboard = () => {
           <ChartCard 
             type="line"
             title={chartData.playerHistory.title}
-            data={chartData.playerHistory.data.length > 0 ? chartData.playerHistory.data : []}
+            data={chartData.playerHistory.data}
             peak={live?.ccus.toString() || "0"}
           />
         </div>
@@ -217,7 +219,7 @@ const Dashboard = () => {
         
         <div className="col-span-12 lg:col-span-6 animate-fade-in" style={{ animationDelay: '900ms' }}>
           <DataTable data={tableData.length > 0 ? tableData : [
-            { player: "Awaiting", time: "data...", event: "No data yet", status: "warning" as const }
+            { player: "Demo", time: "now", event: "Sample data", status: "success" as const }
           ]} />
         </div>
       </div>
