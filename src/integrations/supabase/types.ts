@@ -36,6 +36,36 @@ export type Database = {
         }
         Relationships: []
       }
+      game_stats: {
+        Row: {
+          ccus: number | null
+          created_at: string
+          id: string
+          place_id: number
+          rage_quits: number | null
+          revenue_usd: number | null
+          ts: string
+        }
+        Insert: {
+          ccus?: number | null
+          created_at?: string
+          id?: string
+          place_id: number
+          rage_quits?: number | null
+          revenue_usd?: number | null
+          ts?: string
+        }
+        Update: {
+          ccus?: number | null
+          created_at?: string
+          id?: string
+          place_id?: number
+          rage_quits?: number | null
+          revenue_usd?: number | null
+          ts?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string | null
