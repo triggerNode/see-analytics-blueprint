@@ -5,56 +5,60 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
 const FAQ = () => {
-  const faqs = [
+  const faqData = [
     {
-      question: "How difficult is it to set up {s}ee Analytics?",
-      answer: "Setup is incredibly simple. Just add our module to your Roblox game with a single line of code, and you'll start receiving analytics data immediately. Our step-by-step guide takes most developers less than 5 minutes to complete."
+      question: "How does {s}ee Analytics integrate with my Roblox game?",
+      answer: "Simply add our lightweight SDK to your game script. It takes less than 5 minutes to set up and starts collecting data immediately. No complex configuration required."
     },
     {
-      question: "Will this impact my game's performance?",
-      answer: "No, our analytics module is designed to be lightweight and efficient. It uses minimal resources and won't affect your game's performance or player experience. All data processing happens on our servers, not in your game."
+      question: "Will this affect my game's performance?",
+      answer: "Not at all. Our analytics run asynchronously and use minimal resources. We've optimized for Roblox's environment to ensure zero impact on player experience."
     },
     {
       question: "Can I track custom events specific to my game?",
-      answer: "Absolutely! You can track any custom event that's important to your game, such as item purchases, level completions, or any other player actions. Our flexible event system adapts to your specific needs."
+      answer: "Absolutely! Beyond standard metrics, you can track custom events like quest completions, item purchases, social interactions, and any game-specific actions that matter to you."
     },
     {
-      question: "How secure is my game data?",
-      answer: "We take data security very seriously. All data is encrypted in transit and at rest, and we follow industry best practices for data protection. We're also GDPR compliant and never share your data with third parties."
+      question: "How quickly can I see results?",
+      answer: "Data appears in your dashboard within seconds. Our real-time processing means you can watch player behavior as it happens and make immediate optimizations."
     },
     {
-      question: "Can I export my analytics data?",
-      answer: "Yes, you can export your data in various formats including CSV, JSON, and PDF reports. Our API also allows for automated data exports and integration with other tools you might be using."
+      question: "Is my game data secure and private?",
+      answer: "Yes. We use enterprise-grade encryption and never share your data. You maintain full ownership and control over your analytics data at all times."
+    },
+    {
+      question: "Do you support multiple games and experiences?",
+      answer: "Yes! Manage analytics for all your Roblox games from a single dashboard. Perfect for studios with multiple titles or developers testing different concepts."
     }
   ];
 
   return (
-    <section id="faq" className="py-20">
+    <section className="py-16 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#20243F] mb-6">
-            Frequently asked questions
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1A2136] mb-4">
+            Frequently Asked Questions
           </h2>
           <p className="text-xl text-gray-600">
-            Got questions? We've got answers.
+            Everything you need to know about {"{s}ee"} Analytics
           </p>
         </div>
-        
+
         <Accordion type="single" collapsible className="space-y-4">
-          {faqs.map((faq, index) => (
+          {faqData.map((item, index) => (
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 px-6"
+              className="border border-gray-200 rounded-xl px-6 shadow-sm"
             >
-              <AccordionTrigger className="text-left text-lg font-semibold text-[#20243F] hover:no-underline">
-                {faq.question}
+              <AccordionTrigger className="text-left font-semibold text-[#1A2136] hover:text-[#22D3EE] transition-colors">
+                {item.question}
               </AccordionTrigger>
               <AccordionContent className="text-gray-600 leading-relaxed pt-2">
-                {faq.answer}
+                {item.answer}
               </AccordionContent>
             </AccordionItem>
           ))}

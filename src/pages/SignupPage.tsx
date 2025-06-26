@@ -17,13 +17,13 @@ const SignupPage = () => {
   }, [user, navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-[#F5F2FF] to-[#E0EEFF] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] via-purple-50/30 to-blue-50/40 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-8">
         <div className="text-center mb-8">
-          <div className="text-3xl font-bold text-[#20243F] mb-2">
+          <div className="text-3xl font-bold text-[#1A2136] mb-2">
             {"{s}ee"} Analytics
           </div>
-          <p className="text-gray-600">Create your account</p>
+          <p className="text-gray-600">Start your free trial</p>
         </div>
         
         <Auth
@@ -34,15 +34,15 @@ const SignupPage = () => {
             variables: {
               default: {
                 colors: {
-                  brand: '#20243F',
-                  brandAccent: '#2a2f4f',
+                  brand: '#1A2136',
+                  brandAccent: '#22D3EE',
                   brandButtonText: 'white',
-                  defaultButtonBackground: '#20243F',
-                  defaultButtonBackgroundHover: '#2a2f4f',
+                  defaultButtonBackground: '#1A2136',
+                  defaultButtonBackgroundHover: '#22D3EE',
                   inputBackground: 'white',
                   inputBorder: '#e2e8f0',
-                  inputBorderHover: '#20243F',
-                  inputBorderFocus: '#20243F',
+                  inputBorderHover: '#22D3EE',
+                  inputBorderFocus: '#22D3EE',
                 }
               }
             },
@@ -61,7 +61,7 @@ const SignupPage = () => {
             Already have an account?{' '}
             <button
               onClick={() => navigate('/login')}
-              className="text-[#20243F] hover:underline font-medium"
+              className="text-[#22D3EE] hover:underline font-medium"
             >
               Sign in
             </button>
