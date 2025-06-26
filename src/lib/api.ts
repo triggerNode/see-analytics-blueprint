@@ -13,10 +13,12 @@ export interface ApiConfig {
 
 class ApiClient {
   private baseUrl: string;
+  private anonKey: string;
 
   constructor() {
     // Use the full Supabase URL for edge functions
     this.baseUrl = 'https://xbyazuwuvwcggteiuvtq.supabase.co/functions/v1';
+    this.anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhieWF6dXd1dndjZ2d0ZWl1dnRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NzE3NjIsImV4cCI6MjA2NjM0Nzc2Mn0.xEhj5xnZgCecSaU_GV4TrNy0jJrmPsraN0wPXPWTS1w';
   }
 
   async callEdgeFunction<T>(
@@ -47,8 +49,8 @@ class ApiClient {
         const response = await fetch(url.toString(), {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${supabase.supabaseKey}`,
-            'apikey': supabase.supabaseKey,
+            'Authorization': `Bearer ${this.anonKey}`,
+            'apikey': this.anonKey,
             'Content-Type': 'application/json',
           },
           signal: controller.signal,
