@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { apiClient } from '@/lib/api';
@@ -13,6 +14,7 @@ export interface StatRow {
 export const useGameStats = (placeId?: number) => {
   const [rows, setRows] = useState<StatRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isPolling, setIsPolling] = useState(false);
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const channelRef = useRef<any>(null);
@@ -29,9 +31,23 @@ export const useGameStats = (placeId?: number) => {
     }
   };
 
-  // Fetch data from Edge Function
+  // Generate mock data for testing
+  const generateMockData = (): StatRow => {
+    return {
+      place_id: placeId || 123456789,
+      ts: new Date().toISOString(),
+      ccus: Math.floor(Math.random() * 1000) + 50,
+      revenue_usd: Math.floor(Math.random() * 100) + 10,
+      rage_quits: Math.floor(Math.random() * 10),
+    };
+  };
+
+  // Fetch data from Edge Function with fallback to mock data
   const fetchFromEdgeFunction = async () => {
-    if (!placeId) return;
+    if (!placeId) {
+      console.log('No placeId provided, cannot fetch data');
+      return;
+    }
 
     try {
       console.log(`Polling Edge Function for placeId: ${placeId}`);
@@ -39,6 +55,14 @@ export const useGameStats = (placeId?: number) => {
       
       if (response.error) {
         console.error('Edge Function error:', response.error);
+        // Use mock data as fallback
+        console.log('Using mock data as fallback');
+        const mockData = generateMockData();
+        setRows(currentRows => {
+          const updatedRows = [...currentRows, mockData].slice(-120);
+          return updatedRows;
+        });
+        setError(`Edge Function failed: ${response.error} (using mock data)`);
         return;
       }
 
@@ -47,13 +71,21 @@ export const useGameStats = (placeId?: number) => {
         console.log('New data from Edge Function:', newRow);
         
         setRows(currentRows => {
-          // Add new row and keep last 120
           const updatedRows = [...currentRows, newRow].slice(-120);
           return updatedRows;
         });
+        setError(null);
       }
     } catch (error) {
       console.error('Failed to fetch from Edge Function:', error);
+      // Use mock data as fallback
+      console.log('Using mock data as fallback due to fetch error');
+      const mockData = generateMockData();
+      setRows(currentRows => {
+        const updatedRows = [...currentRows, mockData].slice(-120);
+        return updatedRows;
+      });
+      setError(`Network error: ${error instanceof Error ? error.message : 'Unknown error'} (using mock data)`);
     }
   };
 
@@ -109,20 +141,32 @@ export const useGameStats = (placeId?: number) => {
   };
 
   useEffect(() => {
+    console.log('useGameStats effect triggered with placeId:', placeId);
+    
     if (!placeId) {
+      console.log('No placeId provided, setting loading to false');
       setLoading(false);
+      setError('No game selected. Please select a game to view stats.');
       return;
     }
+
+    setError(null);
 
     // Fetch initial data from database
     const fetchInitialData = async () => {
       try {
-        const { data } = await supabase
+        console.log('Fetching initial data from database...');
+        const { data, error: dbError } = await supabase
           .from('game_stats')
           .select('*')
           .eq('place_id', placeId)
           .order('ts', { ascending: false })
           .limit(120);
+        
+        if (dbError) {
+          console.error('Database error:', dbError);
+          throw dbError;
+        }
         
         if (data && data.length > 0) {
           console.log(`Found ${data.length} existing rows in database`);
@@ -137,6 +181,7 @@ export const useGameStats = (placeId?: number) => {
         }
       } catch (error) {
         console.error('Failed to fetch initial data:', error);
+        setError(`Database error: ${error instanceof Error ? error.message : 'Unknown error'}`);
         // Fallback to polling if database fetch fails
         startPolling();
       } finally {
@@ -159,5 +204,5 @@ export const useGameStats = (placeId?: number) => {
     }
   }, [rows.length, isPolling]);
 
-  return { rows, loading };
+  return { rows, loading, error };
 };

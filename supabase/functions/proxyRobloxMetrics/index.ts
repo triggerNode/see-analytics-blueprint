@@ -1,7 +1,6 @@
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -10,12 +9,16 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  console.log('proxyRobloxMetrics: Function invoked with method:', req.method);
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
+    console.log('proxyRobloxMetrics: Handling CORS preflight');
     return new Response(null, { headers: corsHeaders });
   }
 
   if (req.method !== 'GET') {
+    console.log('proxyRobloxMetrics: Method not allowed:', req.method);
     return new Response('Method not allowed', { 
       status: 405, 
       headers: corsHeaders 
@@ -26,7 +29,10 @@ serve(async (req) => {
     const url = new URL(req.url);
     const placeId = url.searchParams.get('placeId');
 
+    console.log('proxyRobloxMetrics: Processing request for placeId:', placeId);
+
     if (!placeId) {
+      console.error('proxyRobloxMetrics: No placeId provided');
       return new Response(
         JSON.stringify({ error: 'placeId parameter is required' }), 
         { 
@@ -36,9 +42,10 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Fetching metrics for placeId: ${placeId}`);
+    console.log(`proxyRobloxMetrics: Fetching metrics for placeId: ${placeId}`);
 
     // First, convert placeId to universeId using Roblox public API
+    console.log('proxyRobloxMetrics: Converting placeId to universeId...');
     const universeResponse = await fetch(
       `https://apis.roblox.com/universes/v1/places/${placeId}/universe`,
       {
@@ -49,17 +56,24 @@ serve(async (req) => {
     );
 
     if (!universeResponse.ok) {
-      throw new Error(`Failed to get universe ID: ${universeResponse.status}`);
+      const errorMsg = `Failed to get universe ID: ${universeResponse.status}`;
+      console.error('proxyRobloxMetrics:', errorMsg);
+      throw new Error(errorMsg);
     }
 
     const universeData = await universeResponse.json();
     const universeId = universeData.universeId;
 
+    console.log('proxyRobloxMetrics: Got universeId:', universeId);
+
     if (!universeId) {
-      throw new Error('Could not find universe ID for this place');
+      const errorMsg = 'Could not find universe ID for this place';
+      console.error('proxyRobloxMetrics:', errorMsg);
+      throw new Error(errorMsg);
     }
 
     // Get game info using the universeId
+    console.log('proxyRobloxMetrics: Fetching game info...');
     const gameInfoResponse = await fetch(
       `https://games.roblox.com/v1/games?universeIds=${universeId}`,
       {
@@ -70,14 +84,18 @@ serve(async (req) => {
     );
 
     if (!gameInfoResponse.ok) {
-      throw new Error(`Failed to get game info: ${gameInfoResponse.status}`);
+      const errorMsg = `Failed to get game info: ${gameInfoResponse.status}`;
+      console.error('proxyRobloxMetrics:', errorMsg);
+      throw new Error(errorMsg);
     }
 
     const gameInfo = await gameInfoResponse.json();
     const gameData = gameInfo.data?.[0];
 
     if (!gameData) {
-      throw new Error('No game data found');
+      const errorMsg = 'No game data found';
+      console.error('proxyRobloxMetrics:', errorMsg);
+      throw new Error(errorMsg);
     }
 
     // Transform the data to match our StatRow interface
@@ -90,7 +108,7 @@ serve(async (req) => {
       rage_quits: Math.floor(Math.random() * 10), // Mock data for demo
     };
 
-    console.log(`Successfully fetched data for placeId ${placeId}:`, transformedData);
+    console.log(`proxyRobloxMetrics: Successfully processed data for placeId ${placeId}:`, transformedData);
 
     return new Response(
       JSON.stringify(transformedData),
@@ -104,12 +122,12 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Error in proxyRobloxMetrics:', error);
+    console.error('proxyRobloxMetrics: Error occurred:', error);
     
     return new Response(
       JSON.stringify({ 
         error: 'Failed to fetch Roblox metrics',
-        details: error.message 
+        details: error instanceof Error ? error.message : 'Unknown error'
       }),
       {
         status: 500,

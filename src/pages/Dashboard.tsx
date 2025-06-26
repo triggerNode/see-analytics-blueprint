@@ -6,24 +6,37 @@ import InsightCard from '@/components/dashboard/InsightCard';
 import DataTable from '@/components/dashboard/DataTable';
 import GameSelectorModal from '@/components/dashboard/GameSelectorModal';
 import { useGameStats } from '@/hooks/useGameStats';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle, RefreshCw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Dashboard = () => {
   const [placeId, setPlaceId] = useState<number | null>(null);
   const [showGameSelector, setShowGameSelector] = useState(false);
-  const { rows, loading } = useGameStats(placeId || undefined);
+  const { rows, loading, error } = useGameStats(placeId || undefined);
 
   useEffect(() => {
+    console.log('Dashboard: Checking for stored placeId...');
     const storedPlaceId = localStorage.getItem('placeId');
     if (storedPlaceId) {
-      setPlaceId(parseInt(storedPlaceId));
+      const parsedPlaceId = parseInt(storedPlaceId);
+      console.log('Dashboard: Found stored placeId:', parsedPlaceId);
+      setPlaceId(parsedPlaceId);
     } else {
+      console.log('Dashboard: No stored placeId found, showing game selector');
       setShowGameSelector(true);
     }
   }, []);
 
   const handlePlaceIdSelected = (newPlaceId: number) => {
+    console.log('Dashboard: New placeId selected:', newPlaceId);
     setPlaceId(newPlaceId);
     setShowGameSelector(false);
+  };
+
+  const handleChangeGame = () => {
+    console.log('Dashboard: User requested to change game');
+    setShowGameSelector(true);
   };
 
   // Calculate metrics from real-time data
@@ -104,8 +117,11 @@ const Dashboard = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
+          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-[#4B6AFF]" />
           <div className="text-2xl font-bold text-[#18181B] mb-2">Loading Dashboard...</div>
-          <p className="text-gray-600">Connecting to real-time data</p>
+          <p className="text-gray-600">
+            {placeId ? `Fetching data for Place ID: ${placeId}` : 'Connecting to real-time data'}
+          </p>
         </div>
       </div>
     );
@@ -113,6 +129,43 @@ const Dashboard = () => {
 
   return (
     <div className="max-w-7xl mx-auto">
+      {error && (
+        <Alert className="mb-6">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription className="flex items-center justify-between">
+            <span>{error}</span>
+            <Button
+              onClick={handleChangeGame}
+              variant="outline"
+              size="sm"
+              className="ml-4"
+            >
+              Change Game
+            </Button>
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {placeId && (
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-[#18181B]">
+              Dashboard - Place ID: {placeId}
+            </h1>
+            <p className="text-gray-600">
+              {rows.length > 0 ? `Showing ${rows.length} data points` : 'Waiting for data...'}
+            </p>
+          </div>
+          <Button
+            onClick={handleChangeGame}
+            variant="outline"
+            className="border-[#4B6AFF] text-[#4B6AFF] hover:bg-[#4B6AFF] hover:text-white"
+          >
+            Change Game
+          </Button>
+        </div>
+      )}
+      
       <div className="grid grid-cols-12 gap-6">
         {/* KPI Cards */}
         {kpiData.map((kpi, index) => (
