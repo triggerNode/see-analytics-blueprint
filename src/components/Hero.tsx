@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -13,15 +12,14 @@ const Hero = () => {
         </div>
         
         <h1 className="text-5xl md:text-7xl font-bold mb-6">
-          <span className="text-[#20243F]">Analytics </span>
+          <span className="text-[#20243F]">Instant Roblox Insights </span>
           <span className="bg-[#20243F] text-white px-4 py-2 rounded-2xl inline-block transform -rotate-1">
-            made simple.
+            Made Simple
           </span>
         </h1>
         
         <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-          Track player behavior, optimize gameplay, and boost engagement with 
-          real-time analytics designed specifically for Roblox developers.
+          Paste a game link, watch live players, revenue & retention, and see your next best move.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
