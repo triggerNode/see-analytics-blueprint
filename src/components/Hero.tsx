@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 const Hero = () => {
@@ -15,12 +14,16 @@ const Hero = () => {
     if (!email) return;
 
     setIsSubmitting(true);
+    
     try {
-      const { error } = await supabase
-        .from('leads')
-        .insert({ email, source: 'landing' });
-
-      if (error) throw error;
+      // Temporarily store in localStorage until leads table is available
+      const leads = JSON.parse(localStorage.getItem('leads') || '[]');
+      leads.push({ 
+        email, 
+        source: 'landing', 
+        created_at: new Date().toISOString() 
+      });
+      localStorage.setItem('leads', JSON.stringify(leads));
 
       toast({
         title: "Success!",
