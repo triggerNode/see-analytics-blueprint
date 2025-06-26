@@ -1,5 +1,6 @@
-
 # {s}ee Analytics
+
+[![CI](https://github.com/triggerNode/see-analytics-blueprint/actions/workflows/ci.yml/badge.svg)](https://github.com/triggerNode/see-analytics-blueprint/actions)
 
 > **Real-time game analytics dashboard for data-driven game development**
 
