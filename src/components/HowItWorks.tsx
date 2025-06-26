@@ -1,62 +1,66 @@
 
 import React from 'react';
+import { Code, BarChart3, Zap } from 'lucide-react';
 
 const HowItWorks = () => {
   const steps = [
     {
-      number: '01',
-      title: 'Install Our Module',
-      description: 'Add our lightweight module to your Roblox game with a single line of code.',
-      color: 'bg-[#A992FF]'
+      icon: Code,
+      title: "Add Our Script",
+      description: "Copy-paste one line of code into your Roblox game script. Takes less than 2 minutes.",
+      step: "01"
     },
     {
-      number: '02',
-      title: 'Configure Tracking',
-      description: 'Set up your events and funnels through our intuitive dashboard interface.',
-      color: 'bg-[#7C6BFF]'
+      icon: BarChart3,
+      title: "Watch Data Flow",
+      description: "See real-time player analytics appear instantly in your dashboard.",
+      step: "02"
     },
     {
-      number: '03',
-      title: 'Get Insights',
-      description: 'Start receiving real-time analytics and actionable insights about your players.',
-      color: 'bg-[#69C9FF]'
+      icon: Zap,
+      title: "Optimize & Grow",
+      description: "Use insights to fix pain points and boost player engagement.",
+      step: "03"
     }
   ];
 
   return (
-    <section id="how-it-works" className="py-20 bg-white/30 backdrop-blur-sm">
+    <section id="how-it-works" className="py-20 bg-[#F8FAFC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#20243F] mb-6">
-            How it works
+          <h2 className="text-4xl md:text-5xl font-bold text-[#1A2136] mb-6">
+            Get started in 3 simple steps
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Get up and running with analytics in three simple steps.
+            From setup to insights in under 5 minutes. No complex configuration required.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="text-center relative">
-              <div className={`w-20 h-20 ${step.color} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg`}>
-                <span className="text-2xl font-bold text-white">{step.number}</span>
+            <div key={index} className="relative">
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all text-center">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="w-8 h-8 bg-[#22D3EE] text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    {step.step}
+                  </div>
+                </div>
+                
+                <div className="w-16 h-16 bg-[#22D3EE]/10 rounded-2xl flex items-center justify-center mx-auto mb-6 mt-4">
+                  <step.icon className="w-8 h-8 text-[#22D3EE]" />
+                </div>
+                
+                <h3 className="text-xl font-semibold text-[#1A2136] mb-4">
+                  {step.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {step.description}
+                </p>
               </div>
               
-              <h3 className="text-2xl font-bold text-[#20243F] mb-4">
-                {step.title}
-              </h3>
-              
-              <p className="text-gray-600 leading-relaxed text-lg">
-                {step.description}
-              </p>
-              
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-10 left-full w-full">
-                  <div className="flex justify-center">
-                    <svg className="w-8 h-8 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </div>
+                <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                  <div className="w-8 h-0.5 bg-[#22D3EE]/30"></div>
                 </div>
               )}
             </div>

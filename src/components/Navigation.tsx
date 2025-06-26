@@ -22,27 +22,27 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <div className="text-2xl font-bold text-[#20243F]">
+            <div className="text-2xl font-bold text-[#1A2136]">
               {"{s}ee"}
             </div>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-gray-700 hover:text-[#20243F] transition-colors">Features</a>
-            <a href="#how-it-works" className="text-gray-700 hover:text-[#20243F] transition-colors">How It Works</a>
-            <a href="#testimonials" className="text-gray-700 hover:text-[#20243F] transition-colors">Testimonials</a>
-            <a href="#pricing" className="text-gray-700 hover:text-[#20243F] transition-colors">Pricing</a>
-            <a href="#faq" className="text-gray-700 hover:text-[#20243F] transition-colors">FAQ</a>
+            <a href="#features" className="text-gray-700 hover:text-[#1A2136] transition-colors">Features</a>
+            <a href="#how-it-works" className="text-gray-700 hover:text-[#1A2136] transition-colors">How It Works</a>
+            <a href="#testimonials" className="text-gray-700 hover:text-[#1A2136] transition-colors">Testimonials</a>
+            <a href="#pricing" className="text-gray-700 hover:text-[#1A2136] transition-colors">Pricing</a>
+            <a href="#faq" className="text-gray-700 hover:text-[#1A2136] transition-colors">FAQ</a>
           </div>
           
           <div className="flex items-center space-x-4">
             <Link to="/login">
-              <Button variant="outline" className="border-[#20243F] text-[#20243F] hover:bg-[#20243F] hover:text-white">
+              <Button variant="outline" className="border-[#1A2136] text-[#1A2136] hover:bg-[#1A2136] hover:text-white">
                 Sign In
               </Button>
             </Link>
             <Link to="/signup">
-              <Button className="bg-[#20243F] hover:bg-[#20243F]/90 text-white">
+              <Button className="bg-[#1A2136] hover:bg-[#1A2136]/90 text-white">
                 Get Started
               </Button>
             </Link>

@@ -1,113 +1,138 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Check } from 'lucide-react';
 
 const Pricing = () => {
   const plans = [
     {
-      name: 'Starter',
-      price: '$19',
-      period: '/month',
-      dau: '10,000 DAU',
+      name: "Starter",
+      price: "Free",
+      period: "forever",
+      description: "Perfect for new developers",
       features: [
-        'Real-time analytics',
-        'Basic funnel tracking',
-        'Email support',
-        'Standard integrations'
+        "Up to 1,000 events/month",
+        "Basic dashboard",
+        "7-day data retention",
+        "Email support"
       ],
-      popular: false
+      cta: "Start Free",
+      highlighted: false
     },
     {
-      name: 'Pro',
-      price: '$49',
-      period: '/month',
-      dau: '100,000 DAU',
+      name: "Pro",
+      price: "$29",
+      period: "per month",
+      description: "For growing games",
       features: [
-        'Everything in Starter',
-        'Advanced A/B testing',
-        'Custom events',
-        'Priority support',
-        'Advanced integrations'
+        "Up to 100,000 events/month",
+        "Advanced analytics",
+        "90-day data retention",
+        "Custom events",
+        "A/B testing",
+        "Priority support"
       ],
-      popular: true
+      cta: "Start Pro Trial",
+      highlighted: true
     },
     {
-      name: 'Enterprise',
-      price: '$199',
-      period: '/month',
-      dau: 'Unlimited DAU',
+      name: "Studio",
+      price: "$99",
+      period: "per month",
+      description: "For successful studios",
       features: [
-        'Everything in Pro',
-        'White-label solution',
-        'Dedicated account manager',
-        'Custom integrations',
-        'SLA guarantee'
+        "Unlimited events",
+        "All analytics features",
+        "1-year data retention",
+        "Multiple games",
+        "Team collaboration",
+        "White-label reports",
+        "Phone support"
       ],
-      popular: false
+      cta: "Contact Sales",
+      highlighted: false
     }
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-white/30 backdrop-blur-sm">
+    <section id="pricing" className="py-20 bg-[#F8FAFC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#20243F] mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#1A2136] mb-6">
             Simple, transparent pricing
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Choose the plan that fits your game's scale and requirements.
+            Start free and scale as your game grows. No hidden fees, cancel anytime.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
-            <Card key={index} className={`relative border-2 shadow-lg ${
-              plan.popular 
-                ? 'border-[#A992FF] shadow-2xl transform scale-105' 
-                : 'border-gray-200 hover:border-[#A992FF]/50'
-            } transition-all duration-300 bg-white/90 backdrop-blur-sm`}>
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-[#A992FF] text-white px-4 py-2 rounded-full text-sm font-medium">
-                    Most Popular
+            <div 
+              key={index}
+              className={`rounded-2xl p-8 shadow-lg transition-all hover:shadow-xl ${
+                plan.highlighted 
+                  ? 'bg-[#1A2136] text-white ring-4 ring-[#22D3EE] scale-105' 
+                  : 'bg-white'
+              }`}
+            >
+              <div className="text-center mb-8">
+                <h3 className={`text-2xl font-bold mb-2 ${
+                  plan.highlighted ? 'text-white' : 'text-[#1A2136]'
+                }`}>
+                  {plan.name}
+                </h3>
+                <p className={`text-sm mb-4 ${
+                  plan.highlighted ? 'text-gray-300' : 'text-gray-600'
+                }`}>
+                  {plan.description}
+                </p>
+                <div className="mb-4">
+                  <span className={`text-4xl font-bold ${
+                    plan.highlighted ? 'text-white' : 'text-[#1A2136]'
+                  }`}>
+                    {plan.price}
+                  </span>
+                  <span className={`text-sm ${
+                    plan.highlighted ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
+                    /{plan.period}
                   </span>
                 </div>
-              )}
+              </div>
               
-              <CardHeader className="text-center pb-4">
-                <h3 className="text-2xl font-bold text-[#20243F] mb-2">{plan.name}</h3>
-                <div className="flex items-baseline justify-center">
-                  <span className="text-5xl font-bold text-[#20243F]">{plan.price}</span>
-                  <span className="text-gray-500 ml-1">{plan.period}</span>
-                </div>
-                <p className="text-gray-600 mt-2">{plan.dau}</p>
-              </CardHeader>
+              <ul className="space-y-4 mb-8">
+                {plan.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-center">
+                    <Check className={`w-5 h-5 mr-3 ${
+                      plan.highlighted ? 'text-[#22D3EE]' : 'text-green-500'
+                    }`} />
+                    <span className={`text-sm ${
+                      plan.highlighted ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
               
-              <CardContent>
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center">
-                      <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      <span className="text-gray-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <Button 
-                  className={`w-full py-3 ${
-                    plan.popular 
-                      ? 'bg-[#20243F] hover:bg-[#20243F]/90 text-white' 
-                      : 'bg-white border-2 border-[#20243F] text-[#20243F] hover:bg-[#20243F] hover:text-white'
-                  } transition-all`}
-                >
-                  Get Started
-                </Button>
-              </CardContent>
-            </Card>
+              <Button 
+                className={`w-full py-3 font-semibold ${
+                  plan.highlighted 
+                    ? 'bg-[#22D3EE] hover:bg-[#22D3EE]/90 text-[#1A2136]' 
+                    : 'bg-[#1A2136] hover:bg-[#1A2136]/90 text-white'
+                }`}
+              >
+                {plan.cta}
+              </Button>
+            </div>
           ))}
+        </div>
+        
+        <div className="text-center mt-12">
+          <p className="text-gray-600">
+            Need a custom plan? <a href="#" className="text-[#22D3EE] hover:underline">Contact our sales team</a>
+          </p>
         </div>
       </div>
     </section>

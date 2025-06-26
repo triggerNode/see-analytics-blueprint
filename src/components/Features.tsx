@@ -40,7 +40,7 @@ const Features = () => {
     <section id="features" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#20243F] mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#1A2136] mb-6">
             Powerful features for game developers
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -53,7 +53,7 @@ const Features = () => {
             <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm hover:bg-white">
               <CardContent className="p-8">
                 <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-[#20243F] mb-3">
+                <h3 className="text-xl font-bold text-[#1A2136] mb-3">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
